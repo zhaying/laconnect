@@ -1,0 +1,65 @@
+#!/bin/bash
+
+##############
+#
+# Name:        laconnect
+# Description: This shell script connects you to the LinuxAcademy
+#              lab servers.
+#
+# Notes:       It assumes your logged in user is the same as your
+#              LinuxAcademy user.  The default server is server 1.
+#              If you want to connect to another server add the
+#              number of that server as an argument.
+#              (ex. ./laconnect 2)
+# Options:
+#          -t  Displays variables for testing
+#              (ex. ./laconnect 1 -t)
+#
+#####################################################################
+
+# TERMINAL COLOR VARIABLES
+# REF: https://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+LIME_YELLOW=$(tput setaf 190)
+POWDER_BLUE=$(tput setaf 153)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+
+# VARIABLES
+linuxAcademyDomain="mylabserver.com"
+linuxAcademyHost=$USER
+hostNumber=$1
+myDefaultServer="${linuxAcademyHost}1.$linuxAcademyDomain"
+myOtherServer="$linuxAcademyHost$1.$linuxAcademyDomain"
+
+# TEST
+if [[ $1 = "-t" || $2 = "-t" ]]; then
+  printf "\n"
+  printf "Checking variables...\n\n"
+  printf "The linux   academy doamin is ${GREEN}$linuxAcademyDomain\n${NORMAL}"
+  printf "My  linux   academy host   is ${GREEN}$linuxAcademyHost\n${NORMAL}"
+  printf "My  host    number         is ${GREEN}$hostNumber\n${NORMAL}"
+  printf "My  default server         is ${GREEN}$myDefaultServer\n${NORMAL}"
+  printf "My  other   server         is ${GREEN}$myOtherServer\n${NORMAL}"
+  printf "\n"
+fi
+
+# CONNECT TO THE HOST
+if [[ -z $1 ]]; then
+  printf "connecting...\n"
+  ssh user@$myDefaultServer
+else
+  printf "connecting...\n"
+  ssh user@$myOtherServer
+fi
+# END
