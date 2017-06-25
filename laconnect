@@ -59,7 +59,11 @@ if [[ -z $1 ]]; then
   printf "connecting...\n"
   ssh user@$myDefaultServer
 else
-  printf "connecting...\n"
-  ssh user@$myOtherServer
+  if [[ $1 = "-t" ]]; then
+    printf "${RED}Mic check one two one two...\n\n${NORMAL}"
+  else
+    printf "connecting...\n"
+    ssh user@$myOtherServer
+  fi
 fi
 # END
